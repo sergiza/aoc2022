@@ -1,9 +1,9 @@
 use std::io::*;
 use std::fs::*;
 
-fn main() {
+fn main()
+{
     let mut c_current = 0;
-    let mut c_max = 0;
 
     // READ
     let mut file = File::open("../../input/01").expect("Can't open file!");
@@ -11,19 +11,54 @@ fn main() {
     file.read_to_string(&mut text).expect("Can't read file!");
     let line = text.split('\n');
 
+    // EJ 1
+    // let mut c_max = 0;
+    // for value in line
+    // {
+    //     if value != "" {
+    //         c_current = c_current + value.parse::<i32>().unwrap();
+    //     } else {
+    //         c_current = 0;
+    //     }
+
+    //     if c_current > c_max {
+    //         c_max = c_current;
+    //     }
+
+    //     println!("{} (+{}) \tMAX={}", c_current, value, c_max);
+    // }
+
+    // EJ 2
+    let mut c_max_1 = 0;
+    let mut c_max_2 = 0;
+    let mut c_max_3 = 0;
+
     for value in line
     {
         if value != "" {
             c_current = c_current + value.parse::<i32>().unwrap();
-        } else {
+        }
+        else
+        {
+            if c_current > c_max_1 {
+                c_max_3 = c_max_2;
+                c_max_2 = c_max_1;
+                c_max_1 = c_current;
+            }
+            else if c_current > c_max_2 {
+                c_max_3 = c_max_2;
+                c_max_2 = c_current;
+            } 
+            else if c_current > c_max_3 {
+                c_max_3 = c_current;
+            }
+            println!("{} > {} > {} \t; {} current", c_max_1, c_max_2, c_max_3, c_current);
             c_current = 0;
+
         }
 
-        if c_current > c_max {
-            c_max = c_current;
-        }
-
-        println!("{} (+{}) \tMAX={}", c_current, value, c_max);
+        println!("{} (+{})", c_current, value);
     }
-    println!("Max calories: {}", c_max);
+    let total = c_max_1 + c_max_2 + c_max_3;
+    println!("Total calories carried by the top 3 elves: {}", total);
 }
