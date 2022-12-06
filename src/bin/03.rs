@@ -19,9 +19,7 @@ fn e1(input: std::str::Split<&str>)
             }
         }
 
-        if repeating.is_uppercase() {   sum = sum + offset(repeating)   }   // caps
-        else                        {   sum = sum + offset(repeating)   }   // lower
-
+        sum = sum + offset(repeating);
         println!("{}\t{} -> {} | {}", sum, repeating, halves.0, halves.1);
     }
 }
