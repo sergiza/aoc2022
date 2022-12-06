@@ -43,37 +43,38 @@ fn rock_paper_scissors_inverse(elf:i32, result:i32) -> i32
     return -1
 }
 
-fn main()
+fn e1(input: std::str::Split<&str>)
 {
-    // READ
-    let input = include_str!("../../input/02").split("\n");
-
     let mut score = 0;
     let mut elf = 0;
     let mut me = 0;
 
-    // EJ 1
-    // for line in input
-    // {
-    //     if line != ""
-    //     {
-    //         let round = line.split(" ");
-    //         for hand in round
-    //         {
-    //             if hand.starts_with('A') { elf = 1; }
-    //             if hand.starts_with('B') { elf = 2; }
-    //             if hand.starts_with('C') { elf = 3; }
-    //             if hand.starts_with('X') { me = 1; }
-    //             if hand.starts_with('Y') { me = 2; }
-    //             if hand.starts_with('Z') { me = 3; }
-    //         }
-    //         score = score + me + rock_paper_scissors(elf, me);
-    //         println!("SCORE = {}\t<-\t{}", score, line);
-    //     }
-    // }
+    for line in input
+    {
+        if line != ""
+        {
+            let round = line.split(" ");
+            for hand in round
+            {
+                if hand.starts_with('A') { elf = 1; }
+                if hand.starts_with('B') { elf = 2; }
+                if hand.starts_with('C') { elf = 3; }
+                if hand.starts_with('X') { me = 1; }
+                if hand.starts_with('Y') { me = 2; }
+                if hand.starts_with('Z') { me = 3; }
+            }
+            score = score + me + rock_paper_scissors(elf, me);
+            println!("SCORE = {}\t<-\t{}", score, line);
+        }
+    }
+}
 
-    // EJ 2
+fn e2(input: std::str::Split<&str>)
+{
+    let mut score = 0;
+    let mut elf = 0;
     let mut result = 0;
+
     for line in input
     {
         if line != ""
@@ -88,9 +89,21 @@ fn main()
                 if hand.starts_with('Y') { result = 3; }
                 if hand.starts_with('Z') { result = 6; }
             }
-            me = rock_paper_scissors_inverse(elf, result);
+            let me = rock_paper_scissors_inverse(elf, result);
             score = score + me + result;
             println!("SCORE = {}\t<-\t{}", score, line);
         }
+    }
+}
+
+fn main()
+{
+    let input = include_str!("../../input/02").split("\n");     // Read Input
+    
+    let e = 2;
+    match e
+    {
+        1 => e1(input),
+        _ => e2(input),
     }
 }
