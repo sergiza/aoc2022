@@ -67,11 +67,6 @@ fn main()
     let line = text.split('\n');
 
     
-    let ej = 2;
-    match ej
-    {
-        1 => e1(line),
-        2 => e2(line),
-        _ => println!("¿?¿?"),
-    }
+    // e1(line);
+    e2(line);
 }

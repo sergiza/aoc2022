@@ -1,7 +1,7 @@
 fn offset(chara: char) -> i32
 {
-    if chara.is_uppercase() {  return chara as i32 - 38    }
-    else                    {  return chara as i32 - 96;   }
+    if chara.is_uppercase() {  return chara as i32 - 38 }
+    else                    {  return chara as i32 - 96 }
 }
 
 fn e1(input: std::str::Split<&str>)

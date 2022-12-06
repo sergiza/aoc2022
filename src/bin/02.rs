@@ -100,10 +100,6 @@ fn main()
 {
     let input = include_str!("../../input/02").split("\n");     // Read Input
     
-    let e = 2;
-    match e
-    {
-        1 => e1(input),
-        _ => e2(input),
-    }
+    // e1(input);
+    e2(input);
 }
