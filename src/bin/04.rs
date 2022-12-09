@@ -15,25 +15,39 @@ impl Pair
         }
         return false
     }
+    fn overlaps(&mut self, other_elf: Pair) -> bool
+    {
+        if self.first <= other_elf.first && other_elf.first <= self.last
+        {
+            return true
+        }
+        if self.first <= other_elf.last && other_elf.last <= self.last
+        {
+            return true
+        }
+        return false
+    }
 }
 
 
 fn e1(input: std::str::Split<&str>)
 {
-    let mut c = 0;
+    let mut c_contains = 0;
+    let mut c_overlaps = 0;
+
     for line in input
     {
         if line != ""
         {
-            let groups = line.split(",");
+            let group = line.split(",");
     
             let mut elves: [Pair; 2] = [ Pair { first:0, last:0 }, Pair { first:0, last:0 } ];
             let mut i = 0;
-            for group in groups
+            for range in group
             {
-                let mut number = group.split("-");
-                elves[i].first = number.nth(0).expect("Error enunciado?").parse::<i32>().unwrap();
-                elves[i].last  = number.nth(0).expect("Error enunciado?").parse::<i32>().unwrap();
+                let mut number = range.split("-");
+                elves[i].first = number.nth(0).expect("INPUT FILE UNEXPECTED?").parse::<i32>().unwrap();
+                elves[i].last  = number.nth(0).expect("INPUT FILE UNEXPECTED?").parse::<i32>().unwrap();
     
                 i = i + 1;
             }
@@ -41,13 +55,21 @@ fn e1(input: std::str::Split<&str>)
             // CONTAINS
             if elves[0].contains(elves[1]) || elves[1].contains(elves[0])
             {
-                c = c + 1;
-                println!("Does contain:\t\t{}\t\t{}", line, c);
+                c_contains = c_contains + 1;
+                print!("{}\tDoes contain \t\t({})", line, c_contains);
             }
             else
             {
-                println!("Does NOT contain:\t{}\t\t{}", line, c);
+                print!("{}\t...\t\t\t", line);
             }
+
+            // OVERLAPS
+            if elves[0].overlaps(elves[1]) || elves[1].overlaps(elves[0])
+            {
+                c_overlaps = c_overlaps + 1;
+                print!("\t\t Overlaps \t\t{}", c_overlaps);
+            }
+            println!();
         }
     }
 }
