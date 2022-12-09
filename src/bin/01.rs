@@ -61,12 +61,12 @@ fn e2(line: std::str::Split<char>)
 fn main()
 {
     // READ
-    let mut file = File::open("../../input/01").expect("Can't open file!");
+    let mut file = File::open("../../input/01mini").expect("Can't open file!");
     let mut text = String::new();
     file.read_to_string(&mut text).expect("Can't read file!");
     let line = text.split('\n');
 
     
-    // e1(line);
-    e2(line);
+    e1(line);
+    // e2(line);
 }
