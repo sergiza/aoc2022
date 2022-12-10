@@ -7,7 +7,7 @@ struct Pair
 
 impl Pair
 {
-    fn contains(&mut self, other_elf: Pair) -> bool
+    fn contains(&self, other_elf: &Pair) -> bool
     {
         if self.first <= other_elf.first && self.last >= other_elf.last
         {
@@ -45,15 +45,21 @@ fn e1(input: std::str::Split<&str>)
             let mut i = 0;
             for range in group
             {
-                let mut number = range.split("-");
-                elves[i].first = number.nth(0).expect("INPUT FILE UNEXPECTED?").parse::<i32>().unwrap();
-                elves[i].last  = number.nth(0).expect("INPUT FILE UNEXPECTED?").parse::<i32>().unwrap();
+                // cleaner version - utilizando split_once
+                let (first, last) = range.split_once("-").unwrap();
+                elves[i].first = first.parse::<i32>().unwrap();
+                elves[i].last = last.parse::<i32>().unwrap();
+
+                // old version
+                // let mut number = range.split("-");
+                // elves[i].first = number.nth(0).expect("INPUT FILE UNEXPECTED?").parse::<i32>().unwrap();
+                // elves[i].last  = number.nth(0).expect("INPUT FILE UNEXPECTED?").parse::<i32>().unwrap();
     
                 i = i + 1;
             }
 
             // CONTAINS
-            if elves[0].contains(elves[1]) || elves[1].contains(elves[0])
+            if elves[0].contains(&elves[1]) || elves[1].contains(&elves[0])
             {
                 c_contains = c_contains + 1;
                 print!("{}\tDoes contain \t\t({})", line, c_contains);
