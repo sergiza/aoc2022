@@ -6,7 +6,7 @@ fn size_stack(input: std::str::Split<&str>) -> usize
     return 10
 }
 
-fn move_crates()
+fn move_crates(from: &Vec<char>, to: &Vec<char>)
 {
 
 }
@@ -25,8 +25,13 @@ fn e1(input: std::str::Split<&str>)
     stack_crates[2].push('C');
     stack_crates[2].push('D');
     stack_crates[3].push('P');
-    let x = stack_crates[0].pop();
-    println!("{:?}", x.unwrap());
+
+    let mut x = stack_crates[1].pop();
+    while x.is_some()
+    {
+        println!("{:?}", x.unwrap());
+        x = stack_crates[1].pop();
+    }
 }
 
 fn main()
