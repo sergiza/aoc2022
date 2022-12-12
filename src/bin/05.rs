@@ -40,16 +40,16 @@ fn e1(input: std::str::Split<&str>)
     let mut empty_line = false;
     for line in input
     {
+        // PRINT (on empty line)
         if line == ""               // skip empty line
         {   
             empty_line = true;    
 
-            println!("\nInitial arrangement:");
+            println!("\nCrates arrangement:");
             for i in 0..stack_crates.len()
             {
                 println!("{:?}", stack_crates[i]);
             }
-            println!("\nMove:");
         }
         
         else
@@ -95,16 +95,26 @@ fn e1(input: std::str::Split<&str>)
             else
             {
                 // parse
-                // FIX:     los indexes pueden ser más de un chara
                 let mut linechars = line.chars().skip(5);           // skip "move "
-                let times = linechars.next().unwrap().to_digit(10);
-                let mut linechars = linechars.skip(6);              // skip " from "
+                let mut times = String::from("");
+                times.push(linechars.next().unwrap());
+                
+                let mut times_figures = linechars.next().unwrap();
+                while times_figures.is_digit(10)
+                {
+                    times.push(times_figures);
+                    times_figures = linechars.next().unwrap();
+                }
+                let times = times.parse::<usize>().unwrap();
+
+                let mut linechars = linechars.skip(5);              // skip "from "
                 let index_from = linechars.next().unwrap().to_digit(10);
                 let mut linechars = linechars.skip(4);              // skip " to "
                 let index_to = linechars.next().unwrap().to_digit(10);
 
-                if times == None || index_from == None || index_to == None  {   break;  }
-                let times = times.unwrap() as usize;
+                if index_from == None || index_to == None  {   break;  }
+                // if times == None || index_from == None || index_to == None  {   break;  }
+                // let times = times.unwrap() as usize;
                 let index_from = index_from.unwrap() as usize;
                 let index_to = index_to.unwrap() as usize;
 
@@ -120,13 +130,6 @@ fn e1(input: std::str::Split<&str>)
                 move_crates(from, to, times);
             }
         }
-    }
-
-    // PRINT
-    println!("\nAfter the rearrangement procedure completes:");
-    for i in 0..stack_crates.len()
-    {
-        println!("{:?}", stack_crates[i]);
     }
 }
 
