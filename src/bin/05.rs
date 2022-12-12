@@ -16,6 +16,27 @@ fn move_crates(from: &mut VecDeque<char>, to: &mut VecDeque<char>, mut times: us
     }
 }
 
+fn move_crates_9001(from: &mut VecDeque<char>, to: &mut VecDeque<char>, mut times: usize)
+{
+    let mut aux: VecDeque<char> = Default::default();
+
+    // println!("DEBUG:");          // test
+    // println!("{:?}", from);      // test
+    let mut times_aux = times;
+    while times_aux != 0
+    {
+        aux.push_front(from.pop_back().unwrap());
+        times_aux = times_aux - 1;
+    }
+    // println!("{:?}", aux);       // test
+    while times != 0
+    {
+        to.push_back(aux.pop_front().unwrap());
+        times = times - 1;
+    }
+    // println!("{:?}", to);        // test
+}
+
 // Get mutable references to the elements at the two indices.
 //     If `i != j`, returns `Ok(_)` with two references.
 //     If `i == j`, returns `Err(_)` with a single reference.
@@ -113,8 +134,6 @@ fn e1(input: std::str::Split<&str>)
                 let index_to = linechars.next().unwrap().to_digit(10);
 
                 if index_from == None || index_to == None  {   break;  }
-                // if times == None || index_from == None || index_to == None  {   break;  }
-                // let times = times.unwrap() as usize;
                 let index_from = index_from.unwrap() as usize;
                 let index_to = index_to.unwrap() as usize;
 
@@ -126,8 +145,13 @@ fn e1(input: std::str::Split<&str>)
                 if index_from > index_to    {   (to, from) = get2(&mut stack_crates, index_from, index_to).unwrap();    }
                 else                        {   (from, to) = get2(&mut stack_crates, index_from, index_to).unwrap();    }
 
-                println!("from {:?} to {:?} {} times", from, to, times);                // TEST
-                move_crates(from, to, times);
+
+                // println!("from {:?} to {:?} {} times", from, to, times);                // TEST
+
+                // NOTE:    E1 / E2
+                //
+                // move_crates(from, to, times);            // e1
+                move_crates_9001(from, to, times);          // e2
             }
         }
     }
