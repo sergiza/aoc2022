@@ -71,6 +71,5 @@ fn e1(input: String) -> Option<VecDeque<char>>
 fn main()
 {
     let input = include_str!("../../input/06").to_string();     // Read input
-
     e1(input);
 }
