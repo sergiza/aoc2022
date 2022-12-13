@@ -20,21 +20,17 @@ fn move_crates_9001(from: &mut VecDeque<char>, to: &mut VecDeque<char>, mut time
 {
     let mut aux: VecDeque<char> = Default::default();
 
-    // println!("DEBUG:");          // test
-    // println!("{:?}", from);      // test
     let mut times_aux = times;
     while times_aux != 0
     {
         aux.push_front(from.pop_back().unwrap());
         times_aux = times_aux - 1;
     }
-    // println!("{:?}", aux);       // test
     while times != 0
     {
         to.push_back(aux.pop_front().unwrap());
         times = times - 1;
     }
-    // println!("{:?}", to);        // test
 }
 
 // Get mutable references to the elements at the two indices.
